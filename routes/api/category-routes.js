@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { Category, Product } = require("../../models");
+const { restore } = require("../../models/Product");
 
 // The `/api/categories` endpoint
 //try/catchs in every route
@@ -7,7 +8,16 @@ const { Category, Product } = require("../../models");
 //all routes to have logging
 //all routes to have some form of validation
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+  try {
+    const categories = await Category.findAll({
+      include: [{ model: Product, attributes: [] }],
+      //what attributes do you want from the product model?
+    });
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(500).json(error);
+  }
   // find all categories
   // be sure to include its associated Products
 });
