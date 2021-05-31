@@ -11,7 +11,7 @@ const { restore } = require("../../models/Product");
 router.get("/", async (req, res) => {
   try {
     const categories = await Category.findAll({
-      include: [{ model: Product, attributes: [id] }],
+      include: [{ model: Product, attributes: ["id"] }],
       //what attributes do you want from the product model?
     });
     res.status(200).json(categories);
@@ -25,9 +25,10 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id;
+    console.log(id);
     const category = await Category.findByPk(id, {
-      include: [{ model: Product, attributes: [category_name] }],
+      include: [{ model: Product, attributes: ["product_name"] }],
       //what object is going to provide the id for one category?
     });
     res.status(200).json(category);
