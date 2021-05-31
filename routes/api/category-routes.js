@@ -16,7 +16,8 @@ router.get("/", async (req, res) => {
     });
     res.status(200).json(categories);
   } catch (error) {
-    res.status(500).json(error);
+    console.log(error);
+    res.status(500).json({ error: "Failed to get categories" });
   }
   // find all categories
   // be sure to include its associated Products
@@ -24,10 +25,10 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const category = await Category.findOne({
-      where: {},
-      //what object is going to provide the id for one category?
+    const { id } = req.params;
+    const category = await Category.findByPk(id, {
       include: [{ model: Product, attributes: [] }],
+      //what object is going to provide the id for one category?
     });
     res.status(200).json(category);
     if (!category) {
