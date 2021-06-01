@@ -3,10 +3,6 @@ const { Category, Product } = require("../../models");
 const { restore } = require("../../models/Product");
 
 // The `/api/categories` endpoint
-//try/catchs in every route
-//all routes return a response
-//all routes to have logging
-//all routes to have some form of validation
 
 router.get("/", async (req, res) => {
   try {
