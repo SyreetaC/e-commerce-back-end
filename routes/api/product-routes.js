@@ -58,7 +58,7 @@ router.get("/:id", async (req, res) => {
   // be sure to include its associated Category and Tag data
 });
 
-//TO DO
+//TO DO- link tag_id here
 // create new product
 router.post("/", async (req, res) => {
   await Product.create({

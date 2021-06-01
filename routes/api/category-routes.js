@@ -60,11 +60,10 @@ router.post("/", async (req, res) => {
 //NEEDS FIXING
 router.put("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+    const category_id = req.params.id;
     const updatedCategory = await Category.update(
-      id,
-      { category_name: req.body.category_name },
-      { where: id, returning: true }
+      { category_name: req.body.name },
+      { where: { category_id }, returning: true }
     );
     res.status(200).json(updatedCategory);
     if (!updatedCategory) {
