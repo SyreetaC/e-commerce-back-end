@@ -26,7 +26,6 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
     const category = await Category.findByPk(id, {
       include: [{ model: Product, attributes: ["product_name"] }],
       //what object is going to provide the id for one category?
@@ -45,7 +44,10 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const newCategory = await Category.create({});
+    const newCategory = await Category.create({
+      category_name: req.body.category_name,
+    });
+    res.status(200).json(newCategory);
     //what object is being created?
   } catch (error) {
     console.error(error);
