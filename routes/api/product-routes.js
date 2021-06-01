@@ -60,8 +60,8 @@ router.get("/:id", async (req, res) => {
 
 //TO DO
 // create new product
-router.post("/", (req, res) => {
-  Product.create({
+router.post("/", async (req, res) => {
+  await Product.create({
     product_name: req.body.product_name,
     price: req.body.price,
     stock: req.body.stock,
@@ -71,7 +71,7 @@ router.post("/", (req, res) => {
     .then((newProduct) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
-        const productTagIdArr = req.body.tagIds.map((tag_id) => {
+        const productTagIdArr = await req.body.tagIds.map((tag_id) => {
           return {
             product_id: product.id,
             tag_id,
@@ -90,9 +90,9 @@ router.post("/", (req, res) => {
 });
 
 // update product
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   // update product data
-  Product.update(req.body, {
+  await Product.update(req.body, {
     where: {
       id: req.params.id,
     },
@@ -103,7 +103,7 @@ router.put("/:id", (req, res) => {
     })
     .then((productTags) => {
       // get list of current tag_ids
-      const productTagIds = productTags.map(({ tag_id }) => tag_id);
+      const productTagIds = await productTags.map(({ tag_id }) => tag_id);
       // create filtered list of new tag_ids
       const newProductTags = req.body.tagIds
         .filter((tag_id) => !productTagIds.includes(tag_id))
@@ -131,8 +131,18 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
-  // delete one product by its `id` value
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedProduct = await Product.destroy(id);
+    res.status(200).json(deletedProduct);
+    if (!deletedProduct) {
+      res.status(404).json({ [ERROR]: "No product found with this id" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Failed to delete product" });
+  } // delete one product by its `id` value
 });
 
 module.exports = router;
