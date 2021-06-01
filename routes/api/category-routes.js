@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
     });
     res.status(200).json(categories);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: "Failed to get categories" });
   }
   // find all categories
@@ -36,13 +36,21 @@ router.get("/:id", async (req, res) => {
       res.status(404).json({ [ERROR]: "No category found with this id" });
     }
   } catch (error) {
-    res.status(500).json(error);
+    console.error(error);
+    res.status(500).json({ error: "Failed to get category with this id" });
   }
   // find one category by its `id` value
   // be sure to include its associated Products
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
+  try {
+    const newCategory = await Category.create({});
+    //what object is being created?
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to create new category" });
+  }
   // create a new category
   //send a response back
 });
