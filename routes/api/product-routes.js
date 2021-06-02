@@ -16,8 +16,8 @@ router.get("/", async (req, res) => {
         },
         {
           model: Tag,
-          attributes: ["tag_id", "tag_name"],
-        }, //DOES NOT SHOW TAG ID OR NAME!
+          attributes: ["id", "tag_name"],
+        },
       ],
     });
     res.status(200).json(products);
@@ -41,14 +41,13 @@ router.get("/:id", async (req, res) => {
         },
         {
           model: Tag,
-          attributes: ["tag_id", "tag_name"],
+          attributes: ["id", "tag_name"],
         },
       ],
-      //NOT SHOWING TAG INFO
     });
     res.status(200).json(product);
     if (!product) {
-      res.status(404).json({ [ERROR]: "No product found with this id" });
+      res.status(404).json({ Error: "No product found with this id" });
     }
   } catch (error) {
     console.error(error.message);
@@ -61,13 +60,15 @@ router.get("/:id", async (req, res) => {
 //TO DO- link tag_id here
 // create new product
 router.post("/", async (req, res) => {
-  await Product.create({
-    product_name: req.body.product_name,
-    price: req.body.price,
-    stock: req.body.stock,
-    category_id: req.body.category_id,
-    //need to link tag_id in here
-  })
+  /* req.body should look like this...
+    {
+      product_name: "Basketball",
+      price: 200.00,
+      stock: 3,
+      tagIds: [1, 2, 3, 4]
+    }
+  */
+  await Product.create(req.body)
     .then((newProduct) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
@@ -133,11 +134,12 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const deletedProduct = await Product.destroy(id);
+    const deletedProduct = await Product.destroy({
+      where: { id: req.params.id },
+    });
     res.status(200).json(deletedProduct);
     if (!deletedProduct) {
-      res.status(404).json({ [ERROR]: "No product found with this id" });
+      res.status(404).json({ Error: "No product found with this id" });
     }
   } catch (error) {
     console.error(error.message);
