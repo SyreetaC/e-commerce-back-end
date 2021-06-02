@@ -49,9 +49,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const newTag = await Tag.create({
-      tag_name: req.body.tag_name,
-    });
+    const newTag = await Tag.create(req.body);
     res.status(200).json(newTag);
   } catch (error) {
     console.error(error.message);
@@ -62,14 +60,12 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const tag_id = req.params.id;
-    const updatedTagName = await Tag.update(
-      { tag_name: req.body.name },
-      { where: { tag_id }, returning: true }
-    );
+    const updatedTagName = await Tag.update(req.body, {
+      where: { id: req.params.id },
+    });
     res.status(200).json(updatedTagName);
     if (!updatedTagName) {
-      res.status(404).json({ [ERROR]: "No tag found with this id" });
+      res.status(404).json({ Error: "No tag found with this id" });
     }
   } catch (error) {
     console.error(error.message);
@@ -80,12 +76,12 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const tag_id = req.params.id;
-    const deletedTag = await Tag.destroy({ where: { tag_id } });
-    res.status(200).json(deletedTag);
+    const deletedTag = await Tag.destroy({ where: { id: req.params.id } });
+
     if (!deletedTag) {
-      res.status(404).json({ [ERROR]: "No tag found with this id" });
+      res.status(404).json({ Error: "No tag found with this id" });
     }
+    res.status(200).json(deletedTag);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Failed to delete tag" });
