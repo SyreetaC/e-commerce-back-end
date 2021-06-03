@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
       include: [
         {
           model: Category,
-          attributes: ["category_id", "category_name"],
+          attributes: ["id", "category_name"],
         },
         {
           model: Tag,
@@ -37,7 +37,7 @@ router.get("/:id", async (req, res) => {
       include: [
         {
           model: Category,
-          attributes: ["category_id", "category_name"],
+          attributes: ["id", "category_name"],
         },
         {
           model: Tag,
@@ -101,7 +101,7 @@ router.put("/:id", async (req, res) => {
   })
     .then((product) => {
       // find all associated tags from ProductTag
-      return ProductTag.findAll(product, {
+      return ProductTag.findAll({
         where: { product_id: req.params.id },
       });
     })
@@ -128,9 +128,12 @@ router.put("/:id", async (req, res) => {
         ProductTag.bulkCreate(newProductTags),
       ]);
     })
-    .then((updatedProductTags) => res.json(updatedProductTags))
+
+    .then((updatedProductTags) => {
+      res.json(updatedProductTags);
+    })
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       res.status(400).json(err);
     });
 });
