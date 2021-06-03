@@ -65,7 +65,8 @@ router.post("/", async (req, res) => {
       product_name: "Basketball",
       price: 200.00,
       stock: 3,
-      tagIds: [1, 2, 3, 4]
+      tagIds: [1, 2, 3, 4],
+      category_id: 2
     }
   */
   await Product.create(req.body)
@@ -100,7 +101,9 @@ router.put("/:id", async (req, res) => {
   })
     .then((product) => {
       // find all associated tags from ProductTag
-      return ProductTag.findAll({ where: { product_id: req.params.id } });
+      return ProductTag.findAll(product, {
+        where: { product_id: req.params.id },
+      });
     })
     .then((productTags) => {
       // get list of current tag_ids
