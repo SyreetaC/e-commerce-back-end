@@ -13,5 +13,5 @@ Finally to connect to the server run `npm start`.
 
 ## Demonstration videos
 
-- Demonstration of connecting to the MySql database using sequelize and seeding the data:
+- Demonstration of connecting to the MySql database using sequelize and seeding the data: https://drive.google.com/file/d/1M1XY4n8rScwwkSBsprsfzQ7WPvqJlkRk/view
 - Demonstration of the RESTful CRUD operations in Postman:

@@ -59,7 +59,7 @@ router.get("/:id", async (req, res) => {
 
 //TO DO- link tag_id here
 // create new product
-router.post("/", async (req, res) => {
+router.post("/", (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -69,13 +69,13 @@ router.post("/", async (req, res) => {
       category_id: 2
     }
   */
-  await Product.create(req.body)
+  Product.create(req.body)
     .then((newProduct) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
           return {
-            product_id: product.id,
+            product_id: newProduct.id,
             tag_id,
           };
         });
