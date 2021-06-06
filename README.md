@@ -11,6 +11,10 @@ To connect to the database run `mysql -u root -p` and enter the password in the 
 To seed the data run `npm run seed`.
 Finally to connect to the server run `npm start`.
 
+## Link to repository:
+
+https://github.com/SyreetaC/e-commerce-back-end
+
 ## Demonstration videos
 
 - Demonstration of connecting to the MySql database using sequelize and seeding the data:
