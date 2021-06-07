@@ -1,0 +1,63 @@
+# Getting started with this API:
+
+## Use one of the following URLs to open the API reference:
+
+### CATEGORY REQUEST URLS:
+
+To get all categories:
+- http://localhost:3001/api/categories
+
+To get one category:
+- http://localhost:3001/api/categories/2
+
+To post a new category:
+- http://localhost:3001/api/categories
+- BODY: {"category_name": "Furniture"}
+
+To update a category:
+- http://localhost:3001/api/categories/6
+- BODY: {"category_name": "White goods"}
+
+### PRODUCT REQUEST URLS:
+
+To get all products:
+- http://localhost:3001/api/products
+
+To get one product:
+- http://localhost:3001/api/products/2
+
+To post a new product:
+- http://localhost:3001/api/products
+- BODY: {"product_name": "Running shorts",
+"price": 20.00,
+"stock": 63,
+"category_id": 2,
+"tagIds": [5,6]
+}
+
+To update a product:
+- http://localhost:3001/api/products/6
+- BODY: {"product_name": "Casual t-shirt",
+"price": 15.00,
+"stock": 23,
+"category_id": 1,
+"tagIds": [1,3,5]
+}
+
+### TAG REQUEST URLS:
+
+To get all tags:
+- http://localhost:3001/api/tags
+
+To get one tag name:
+- http://localhost:3001/api/tags/2
+
+To post a new tag name:
+- http://localhost:3001/api/tags
+- BODY: {"tag_name": "Summer"}
+
+To update a tag name:
+- http://localhost:3001/api/tags/9
+- BODY: {"tag_name": "Party"}
+
+The response body shows the result of each request in the form of a JSON Object.

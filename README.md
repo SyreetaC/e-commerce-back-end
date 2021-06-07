@@ -22,3 +22,7 @@ https://github.com/SyreetaC/e-commerce-back-end
 -
 - Demonstration of the RESTful CRUD operations in Postman:
 - https://drive.google.com/file/d/1fWU8YelDKf6IkSNkh1XJADqRbP4hajND/view
+
+## API documentation:
+
+In the documentation.text file, you will find the documentation to use this RESTful API.
